@@ -5,21 +5,25 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(
-command_prefix="!",
-intents=intents
+    command_prefix="!",
+    intents=intents
 )
+
 
 @bot.event
 async def on_ready():
-print(f"Logged in as {bot.user}")
+    print(f"Logged in as {bot.user}")
+
 
 @bot.command()
 async def ping(ctx):
-await ctx.send("I'm punisher's slave!")
+    await ctx.send("I'm punisher's slave!")
+
 
 def main():
-import config
-bot.run(config.TOKEN)
+    import config
+    bot.run(config.TOKEN)
 
-if name == "main":
-main()
+
+if __name__ == "__main__":
+    main()
