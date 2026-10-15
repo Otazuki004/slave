@@ -3,6 +3,7 @@ import io
 import traceback
 from discord.ext import commands
 from discord import File, Embed
+from discord.ext.commands.view import StringView
 from slave import slave as Yuri
 from slave.decorator.filter_user import filter_user
 
@@ -11,10 +12,22 @@ def p(code):
     print(code)
 
 
+class EvalCommand(commands.Command):
+    async def invoke(self, ctx):
+        ctx.args = [ctx]
+        ctx.kwargs = {}
+        await self.callback(ctx)
+
+
 @filter_user('gPunisher', 1515042523016593499)
-async def evall(ctx, *, code=None):
-    if not code:
+async def evall(ctx):
+    content = ctx.message.content
+    parts = content.split(None, 1)
+
+    if len(parts) < 2 or not parts[1].strip():
         return await ctx.send("Please enter code to run it!")
+
+    code = parts[1]
 
     stats = await ctx.send("Loading...")
 
@@ -90,6 +103,4 @@ async def evall(ctx, *, code=None):
 
 
 async def setup(Yuri):
-    Yuri.add_command(
-        commands.Command(evall, name="eval")
-    )
+    Yuri.add_command(EvalCommand(evall, name="eval"))
