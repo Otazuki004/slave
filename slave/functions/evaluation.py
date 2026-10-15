@@ -9,7 +9,7 @@ from slave.decorator.filter_user import filter_user
 def p(code):
     print(code)
 
-@filter_user(['gPunisher', 1515042523016593499], False)
+@filter_user('gPunisher', 1515042523016593499)
 async def evall(ctx, *args, **kwargs):
     if len(ctx.message.content.split()) < 2:
         return await ctx.send("Please enter code to run it!")
