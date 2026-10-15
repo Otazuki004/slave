@@ -89,4 +89,6 @@ async def evall(ctx, *args, **kwargs):
 
 
 async def setup(Yuri):
-    Yuri.add_command(commands.Command(evall, name="eval"))
+    Yuri.add_command(
+        commands.Command(evall, name="eval", rest_is_raw=True)
+    )
