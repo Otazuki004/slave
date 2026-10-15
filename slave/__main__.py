@@ -1,29 +1,15 @@
-import discord
-from discord.ext import commands
+from discord import *
+from slave import *
+import asyncio
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-bot = commands.Bot(
-    command_prefix="!",
-    intents=intents
-)
-
-
-@bot.event
+@slave.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
+    ch = Yuri.get_channel(1558225000748556348)
+    await ch.send('I woke up...')
 
+async def start():
+    await load_mods()
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send("I'm punisher's slave!")
-
-
-def main():
-    import config
-    bot.run(config.TOKEN)
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    asyncio.run(start())
+    Yuri.run(TOKEN)
