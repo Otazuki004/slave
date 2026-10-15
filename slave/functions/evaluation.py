@@ -6,20 +6,21 @@ from discord import File, Embed
 from slave import slave as Yuri
 from slave.decorator.filter_user import filter_user
 
+
 def p(code):
     print(code)
 
+
 @filter_user('gPunisher', 1515042523016593499)
-async def evall(ctx, *args, **kwargs):
-    if len(ctx.message.content.split()) < 2:
+async def evall(ctx, *, code=None):
+    if not code:
         return await ctx.send("Please enter code to run it!")
 
     stats = await ctx.send("Loading...")
-    cmd = ctx.message.content.split(None, 1)[1]
 
     replied_message = (
         ctx.message.reference.resolved
-        if ctx.message.reference and ctx.message.reference.resolved
+        if ctx.message.reference
         else None
     )
 
@@ -41,7 +42,7 @@ async def evall(ctx, *args, **kwargs):
 
         exec(
             "async def __aexec(ctx, replied_message):\n"
-            + "".join(f"    {line}\n" for line in cmd.splitlines()),
+            + "".join(f"    {line}\n" for line in code.splitlines()),
             namespace,
         )
 
@@ -90,5 +91,5 @@ async def evall(ctx, *args, **kwargs):
 
 async def setup(Yuri):
     Yuri.add_command(
-        commands.Command(evall, name="eval", rest_is_raw=True)
+        commands.Command(evall, name="eval")
     )
