@@ -1,4 +1,4 @@
-import trystart
+import os
 import sys
 import shutil
 from typing import NoReturn
